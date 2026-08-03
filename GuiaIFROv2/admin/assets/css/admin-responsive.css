@@ -1,0 +1,177 @@
+/**
+ * RESPONSIVIDADE DA ÁREA ADMINISTRATIVA — GUIA IFRO
+ *
+ * Abaixo de 1024px o menu lateral vira uma gaveta (drawer) que se abre por
+ * cima do conteúdo. Abaixo de 720px as tabelas administrativas viram cards
+ * empilhados, para evitar rolagem horizontal.
+ */
+
+/* ==========================================================
+   NOTEBOOK / TABLET (≤ 1024px): sidebar vira gaveta
+   ========================================================== */
+@media (max-width: 1024px) {
+    .admin-sidebar {
+        left: calc(var(--admin-sidebar-largura) * -1);
+        box-shadow: var(--shadow-lg);
+        transition: left var(--transition);
+    }
+
+    .admin-sidebar.open {
+        left: 0;
+    }
+
+    .admin-shell {
+        margin-left: 0;
+    }
+
+    .admin-menu-button {
+        display: inline-flex;
+    }
+
+    .admin-dashboard-columns,
+    .admin-contatos-layout,
+    .admin-config-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================
+   TABLET PEQUENO (≤ 860px)
+   ========================================================== */
+@media (max-width: 860px) {
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-shortcuts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-field-grid,
+    .admin-field-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-topbar-view-site span {
+        display: none;
+    }
+}
+
+/* ==========================================================
+   CELULAR (≤ 720px): tabelas viram cards
+   ========================================================== */
+@media (max-width: 720px) {
+    .admin-main {
+        padding: 20px 16px 48px;
+    }
+
+    .admin-topbar {
+        padding-inline: 16px;
+    }
+
+    .admin-user-name {
+        display: none;
+    }
+
+    .admin-page-header {
+        align-items: flex-start;
+    }
+
+    .admin-page-header .button {
+        width: 100%;
+    }
+
+    .admin-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-filter-group {
+        overflow-x: auto;
+    }
+
+    /* Tabela responsiva: cabeçalho oculto, cada linha vira um card */
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table,
+    .admin-table tbody,
+    .admin-table tr,
+    .admin-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-table tr {
+        padding: 14px 16px;
+        border-bottom: 8px solid var(--background);
+    }
+
+    .admin-table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--border);
+        text-align: right;
+    }
+
+    .admin-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .admin-table td::before {
+        content: attr(data-rotulo);
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .admin-table-acoes-col {
+        justify-content: flex-end !important;
+    }
+
+    .admin-table-acoes-col::before {
+        content: none;
+    }
+
+    .admin-cell-descricao {
+        max-width: 220px;
+        text-align: right;
+    }
+
+    .admin-modal-panel,
+    .admin-modal-panel-largo {
+        width: 100%;
+    }
+
+    .admin-item-informacao {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-item-informacao-acoes {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ==========================================================
+   CELULAR PEQUENO (≤ 420px)
+   ========================================================== */
+@media (max-width: 420px) {
+    .admin-login-card {
+        padding: 28px 20px;
+    }
+
+    .admin-toast-container {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        width: auto;
+    }
+}
