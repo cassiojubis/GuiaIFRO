@@ -1,0 +1,1641 @@
+{
+ "versao": 3,
+ "norte": 42.5,
+ "limite": {
+  "x0": -100,
+  "x1": 152,
+  "z0": -130,
+  "z1": 89
+ },
+ "portao": {
+  "x": 27.5,
+  "z": 86.5
+ },
+ "blocos": [
+  {
+   "id": "principal",
+   "nome": "Bloco de servidores",
+   "tipo": "predio",
+   "x": 31.5,
+   "z": 1.5,
+   "w": 113.5,
+   "d": 24,
+   "andares": 2,
+   "salas": [
+    {
+     "id": "banheiros-terreo",
+     "n": "Banheiros",
+     "andar": 0,
+     "x": -16.76,
+     "z": -9.89,
+     "w": 12.65,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "banheiro",
+     "setor": null
+    },
+    {
+     "id": "napne",
+     "n": "NAPNE",
+     "andar": 0,
+     "x": -22.18,
+     "z": 5.04,
+     "w": 23.51,
+     "d": 7.91,
+     "porta": {
+      "lado": "N",
+      "t": 0.2
+     },
+     "cat": "atend",
+     "setor": "napne"
+    },
+    {
+     "id": "copa",
+     "n": "Copa",
+     "andar": 0,
+     "x": -28.52,
+     "z": -9.89,
+     "w": 10.87,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.55
+     },
+     "cat": "apoio",
+     "setor": null
+    },
+    {
+     "id": "espaco-ideias",
+     "n": "Espaço Coletivo de Ideias",
+     "andar": 0,
+     "x": -39.38,
+     "z": -9.89,
+     "w": 10.87,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "apoio",
+     "setor": null
+    },
+    {
+     "id": "auditorio",
+     "n": "Auditório",
+     "andar": 0,
+     "x": -52.9,
+     "z": -3,
+     "w": 16.17,
+     "d": 24,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     },
+     "cat": "grande",
+     "setor": null
+    },
+    {
+     "id": "cra",
+     "n": "CRA",
+     "andar": 0,
+     "x": 6.99,
+     "z": 3.89,
+     "w": 10.11,
+     "d": 10.2,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cat": "atend",
+     "setor": "cra"
+    },
+    {
+     "id": "enfermagem",
+     "n": "Sala de Enfermagem",
+     "andar": 0,
+     "x": 6.99,
+     "z": -9.89,
+     "w": 10.11,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "atend",
+     "setor": "enfermaria"
+    },
+    {
+     "id": "atendimento-1",
+     "n": "Sala de Atendimento",
+     "andar": 0,
+     "x": 27.94,
+     "z": -9.89,
+     "w": 10.11,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.55
+     },
+     "cat": "atend",
+     "setor": null
+    },
+    {
+     "id": "caed",
+     "n": "CAED",
+     "andar": 0,
+     "x": 22.17,
+     "z": 3.89,
+     "w": 20.23,
+     "d": 10.2,
+     "porta": {
+      "lado": "N",
+      "t": 0.25
+     },
+     "cat": "atend",
+     "setor": "caed"
+    },
+    {
+     "id": "atendimento-2",
+     "n": "Sala de Atendimento",
+     "andar": 0,
+     "x": 17.11,
+     "z": -9.89,
+     "w": 10.11,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "atend",
+     "setor": null
+    },
+    {
+     "id": "biblioteca",
+     "n": "Biblioteca",
+     "andar": 0,
+     "x": 42.38,
+     "z": -3,
+     "w": 20.24,
+     "d": 24,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     },
+     "cat": "grande",
+     "setor": "biblioteca"
+    },
+    {
+     "id": "diretoria-ensino",
+     "n": "Diretoria de Ensino",
+     "andar": 1,
+     "x": 5.93,
+     "z": -9.89,
+     "w": 16.84,
+     "d": 10.2,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "coord-superiores",
+     "n": "Coord. Cursos Superiores",
+     "andar": 1,
+     "x": 20.99,
+     "z": -9.89,
+     "w": 13.27,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "coord-tecnicos",
+     "n": "Coord. Cursos Técnicos",
+     "andar": 1,
+     "x": 7.55,
+     "z": 3.89,
+     "w": 16.84,
+     "d": 10.2,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "dape",
+     "n": "DAPE",
+     "andar": 1,
+     "x": 24.4,
+     "z": 3.89,
+     "w": 16.84,
+     "d": 10.2,
+     "porta": {
+      "lado": "N",
+      "t": 0.55
+     },
+     "cat": "outro",
+     "setor": "dape"
+    },
+    {
+     "id": "docente-bem-estar",
+     "n": "Sala Docente — Bem-Estar",
+     "andar": 1,
+     "x": 35.1,
+     "z": -9.89,
+     "w": 14.94,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.45
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "docente-professores",
+     "n": "Sala Docente — Professores",
+     "andar": 1,
+     "x": 47.54,
+     "z": -3,
+     "w": 9.93,
+     "d": 23.99,
+     "porta": {
+      "lado": "O",
+      "t": 0.6
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "banheiros-andar1",
+     "n": "Banheiros",
+     "andar": 1,
+     "x": -15.23,
+     "z": -11.31,
+     "w": 8.46,
+     "d": 7.36,
+     "porta": {
+      "lado": "S",
+      "t": 0.4
+     },
+     "cat": "banheiro",
+     "setor": null
+    },
+    {
+     "id": "cgab",
+     "n": "CGAB",
+     "andar": 1,
+     "x": -18.61,
+     "z": 3.93,
+     "w": 10.41,
+     "d": 9.27,
+     "porta": {
+      "lado": "N",
+      "t": 0.65
+     },
+     "cat": "adm",
+     "setor": "cgab"
+    },
+    {
+     "id": "manutencao-ti",
+     "n": "Manutenção TI",
+     "andar": 1,
+     "x": -24.78,
+     "z": -11.31,
+     "w": 8.69,
+     "d": 7.36,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "apoio",
+     "setor": null
+    },
+    {
+     "id": "direcao-geral",
+     "n": "Direção Geral",
+     "andar": 1,
+     "x": -28.77,
+     "z": 4.36,
+     "w": 9.89,
+     "d": 9.27,
+     "porta": {
+      "lado": "N",
+      "t": 0.7
+     },
+     "cat": "adm",
+     "setor": "direcao-geral"
+    },
+    {
+     "id": "cgti",
+     "n": "CGTI",
+     "andar": 1,
+     "x": -31.9,
+     "z": -11.31,
+     "w": 8.45,
+     "d": 7.36,
+     "porta": {
+      "lado": "S",
+      "t": 0.3
+     },
+     "cat": "adm",
+     "setor": "cgti"
+    },
+    {
+     "id": "depex",
+     "n": "DEPEX",
+     "andar": 1,
+     "x": -39,
+     "z": 4.37,
+     "w": 8.7,
+     "d": 9.27,
+     "porta": {
+      "lado": "N",
+      "t": 0.7
+     },
+     "cat": "adm",
+     "setor": "depex"
+    },
+    {
+     "id": "cgp",
+     "n": "CGP",
+     "andar": 1,
+     "x": -39.74,
+     "z": -11.86,
+     "w": 7.23,
+     "d": 6.28,
+     "porta": {
+      "lado": "S",
+      "t": 0.7
+     },
+     "cat": "adm",
+     "setor": "cgp"
+    },
+    {
+     "id": "sala-reunioes",
+     "n": "Sala de Reuniões",
+     "andar": 1,
+     "x": -48.43,
+     "z": -11.86,
+     "w": 10.15,
+     "d": 6.27,
+     "porta": {
+      "lado": "S",
+      "t": 0.35
+     },
+     "cat": "adm",
+     "setor": null
+    },
+    {
+     "id": "dplad",
+     "n": "DPLAD",
+     "andar": 1,
+     "x": 48.63,
+     "z": 17.13,
+     "w": 15.46,
+     "d": 0.87,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cat": "adm",
+     "setor": "dplad"
+    },
+    {
+     "id": "cpalm",
+     "n": "CPALM",
+     "andar": 1,
+     "x": -46.88,
+     "z": 4.83,
+     "w": 8.44,
+     "d": 10.2,
+     "porta": {
+      "lado": "S",
+      "t": 0.5
+     },
+     "cat": "adm",
+     "setor": "cpalm"
+    },
+    {
+     "id": "csg",
+     "n": "CSG",
+     "andar": 1,
+     "x": -57.75,
+     "z": 2.74,
+     "w": 6.52,
+     "d": 12.55,
+     "porta": {
+      "lado": "N",
+      "t": 0.45
+     },
+     "cat": "adm",
+     "setor": "csg"
+    }
+   ],
+   "rot": 0,
+   "partes": [
+    {
+     "x": -4.25,
+     "z": -3,
+     "w": 113.5,
+     "d": 24
+    }
+   ],
+   "portas": [
+    {
+     "x": -4.25,
+     "z": 9
+    },
+    {
+     "x": -4.31,
+     "z": -15
+    }
+   ],
+   "escada": {
+    "x": -6.9,
+    "z": -9.55,
+    "w": 4,
+    "d": 7
+   }
+  },
+  {
+   "id": "patio",
+   "nome": "PATIO",
+   "tipo": "patio",
+   "x": 29.5,
+   "z": -39.5,
+   "w": 84,
+   "d": 34,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "salas",
+   "nome": "Sala dos alunos e laboratórios",
+   "tipo": "predio",
+   "x": 28.5,
+   "z": -99.5,
+   "rot": 0,
+   "andares": 2,
+   "partes": [
+    {
+     "x": -20.96,
+     "z": 2,
+     "w": 17.08,
+     "d": 66
+    },
+    {
+     "x": 19.06,
+     "z": 2,
+     "w": 13.88,
+     "d": 66
+    },
+    {
+     "x": -0.15,
+     "z": -0.93,
+     "w": 24.55,
+     "d": 16.5
+    }
+   ],
+   "portas": [
+    {
+     "x": -15.02,
+     "z": 35
+    },
+    {
+     "x": 16.03,
+     "z": 35
+    },
+    {
+     "x": -0.17,
+     "z": 7.32
+    }
+   ],
+   "escada": {
+    "x": -0.15,
+    "z": 0.94,
+    "w": 3.5,
+    "d": 6
+   },
+   "salas": [
+    {
+     "id": "imvgt3uad9ri4",
+     "n": "Sala 01 CIT",
+     "andar": 0,
+     "cat": "apoio",
+     "setor": null,
+     "x": -24.25,
+     "z": 30.9,
+     "w": 10.51,
+     "d": 10.1,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uae1udv",
+     "n": "Sala 02 MSA",
+     "andar": 0,
+     "cat": "aula",
+     "setor": null,
+     "x": -24.25,
+     "z": 20.24,
+     "w": 10.51,
+     "d": 11.23,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uae1d3b",
+     "n": "Sala 03 GRÊMIO",
+     "andar": 0,
+     "cat": "aula",
+     "setor": null,
+     "x": -24.24,
+     "z": 9.89,
+     "w": 10.5,
+     "d": 9.47,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uae57xl",
+     "n": "Sala 04 Laboratório de redes",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": -24.23,
+     "z": 1.89,
+     "w": 10.51,
+     "d": 12,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uae22ki",
+     "n": "Sala 05 Cuidoteca ",
+     "andar": 0,
+     "cat": "apoio",
+     "setor": null,
+     "x": -24.24,
+     "z": -8.49,
+     "w": 10.49,
+     "d": 10.44,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uaef8uy",
+     "n": "Sala 06 Laboratório de informática",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": -24.24,
+     "z": -17.19,
+     "w": 10.49,
+     "d": 8.97,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uae46zv",
+     "n": "Sala 07  Laboratório de informática",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": -24.24,
+     "z": -26.34,
+     "w": 10.49,
+     "d": 9.31,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgt3uaeg5h7",
+     "n": "Banheiro Masculino",
+     "andar": 0,
+     "cat": "banheiro",
+     "setor": null,
+     "x": 8.46,
+     "z": 3.02,
+     "w": 6.92,
+     "d": 8.61,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cor": "#008cff"
+    },
+    {
+     "id": "imvgt3uae6qki",
+     "n": "Banheiro Feminino",
+     "andar": 0,
+     "cat": "banheiro",
+     "setor": null,
+     "x": -8.59,
+     "z": 3.02,
+     "w": 7.67,
+     "d": 8.61,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cor": "#d80395"
+    },
+    {
+     "id": "imvgtippp85lj",
+     "n": "Sala 08 Laboratório de ciências ",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": 22.2,
+     "z": 29.01,
+     "w": 7.61,
+     "d": 11.98,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtippp11td",
+     "n": "Sala 09 Laboratório de semiologia e semiotecnica",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": 22.2,
+     "z": 18.21,
+     "w": 7.88,
+     "d": 9.63,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtippp960w",
+     "n": "Sala 10 Labiotrop",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": 22.2,
+     "z": 9.82,
+     "w": 7.89,
+     "d": 7.68,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtippp4x11",
+     "n": "Sala 11 Eja/Adm",
+     "andar": 0,
+     "cat": "aula",
+     "setor": null,
+     "x": 22.27,
+     "z": 2,
+     "w": 7.75,
+     "d": 7.97,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtipppimwa",
+     "n": "Sala 12 Ciências biológicas 1°",
+     "andar": 0,
+     "cat": "aula",
+     "setor": null,
+     "x": 22.27,
+     "z": -6.38,
+     "w": 7.75,
+     "d": 8.79,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtippp6sgp",
+     "n": "Sala 13 Ciências biológicas 3°",
+     "andar": 0,
+     "cat": "aula",
+     "setor": null,
+     "x": 22.26,
+     "z": -15.56,
+     "w": 8.01,
+     "d": 9.58,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtipppc53e",
+     "n": "Sala 14 Laboratório de hardware",
+     "andar": 0,
+     "cat": "lab",
+     "setor": null,
+     "x": 22.26,
+     "z": -25.68,
+     "w": 8.01,
+     "d": 10.65,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvgtippphvp3",
+     "n": "Sala de Apoio",
+     "andar": 0,
+     "cat": "apoio",
+     "setor": null,
+     "x": 7.68,
+     "z": -6.64,
+     "w": 6.87,
+     "d": 5.06,
+     "porta": {
+      "lado": "S",
+      "t": 0.75
+     }
+    },
+    {
+     "id": "imviecnnj4zr3",
+     "n": "Sala 15 1 bio mat",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.25,
+     "z": 20.7,
+     "w": 12.49,
+     "d": 8.4,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnjklv0",
+     "n": "Sala 16 1 bio vesp",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.25,
+     "z": 12.25,
+     "w": 12.49,
+     "d": 8.5,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnjheus",
+     "n": "Sala 17 1 t.i mat/ eja/adm",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.34,
+     "z": 3.36,
+     "w": 12.68,
+     "d": 9.29,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnj89kz",
+     "n": "Sala 18 1 t.i vesp/ analises clínicas",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.34,
+     "z": -6.13,
+     "w": 12.68,
+     "d": 9.72,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnj9iyi",
+     "n": "Sala 19 2 bio mat/ análises clínicas 4 período",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.25,
+     "z": -16.52,
+     "w": 12.49,
+     "d": 11.05,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnj5ipq",
+     "n": "Sala 20 2 bio vesp eja/adm 3 período",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.25,
+     "z": -26.52,
+     "w": 12.49,
+     "d": 8.95,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnjhubl",
+     "n": "Sala 21 2 t.i mat/ enfermagem 3 ano",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": -23.25,
+     "z": 29.95,
+     "w": 12.49,
+     "d": 10.1,
+     "porta": {
+      "lado": "L",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imviecnnj614y",
+     "n": "Banheiro feminino",
+     "andar": 1,
+     "cat": "banheiro",
+     "setor": null,
+     "x": -8.12,
+     "z": 3.02,
+     "w": 7.67,
+     "d": 8.61,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cor": "#d80395"
+    },
+    {
+     "id": "imviehhq43djf",
+     "n": "Banheiro Masculino",
+     "andar": 1,
+     "cat": "banheiro",
+     "setor": null,
+     "x": 8.66,
+     "z": 3.02,
+     "w": 6.92,
+     "d": 8.61,
+     "porta": {
+      "lado": "N",
+      "t": 0.5
+     },
+     "cor": "#008cff"
+    },
+    {
+     "id": "imvifwh418010",
+     "n": "Sala 22 laboratório de ciências",
+     "andar": 1,
+     "cat": "lab",
+     "setor": null,
+     "x": 20.56,
+     "z": 30.88,
+     "w": 10.88,
+     "d": 8.25,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh41jh3t",
+     "n": "Sala 23 laboratório de ciências II",
+     "andar": 1,
+     "cat": "lab",
+     "setor": null,
+     "x": 20.56,
+     "z": 22.63,
+     "w": 10.88,
+     "d": 8.25,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh4148gs",
+     "n": "Sala 24 2 t.i vesp",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": 20.56,
+     "z": 14.38,
+     "w": 10.88,
+     "d": 8.25,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh4145o6",
+     "n": "Sala 25 3 bio mat/ciências biológicas 7 período",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": 20.56,
+     "z": 5.01,
+     "w": 10.89,
+     "d": 10.5,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh412c7y",
+     "n": "Sala 26 3 bio vesp",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": 20.56,
+     "z": -4.71,
+     "w": 10.88,
+     "d": 8.93,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh41hydh",
+     "n": "Sala 27 3 t.i mat",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": 20.56,
+     "z": -14.47,
+     "w": 10.88,
+     "d": 10.58,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    },
+    {
+     "id": "imvifwh41b6h9",
+     "n": "Sala 28 3 t.i vesp",
+     "andar": 1,
+     "cat": "aula",
+     "setor": null,
+     "x": 20.56,
+     "z": -25.37,
+     "w": 10.88,
+     "d": 11.24,
+     "porta": {
+      "lado": "O",
+      "t": 0.5
+     }
+    }
+   ],
+   "w": 55.5,
+   "d": 66
+  },
+  {
+   "id": "campo",
+   "nome": "Campo",
+   "tipo": "campo",
+   "x": 95.5,
+   "z": -88.5,
+   "w": 56,
+   "d": 62,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "q1",
+   "nome": "Quadra de areia",
+   "tipo": "quadra",
+   "x": 135.5,
+   "z": -106,
+   "w": 16,
+   "d": 20,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "q2",
+   "nome": "Quadra de areia",
+   "tipo": "quadra",
+   "x": 136.5,
+   "z": -66,
+   "w": 16,
+   "d": 20,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "estac",
+   "nome": "Estacionamento",
+   "tipo": "estac",
+   "x": -14.5,
+   "z": 63,
+   "w": 73,
+   "d": 37,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "anexo",
+   "nome": "cantina",
+   "tipo": "ponto",
+   "x": 4,
+   "z": -40,
+   "rot": 42.5,
+   "andares": 1,
+   "partes": [
+    {
+     "x": 0,
+     "z": 0,
+     "w": 10,
+     "d": 7
+    }
+   ],
+   "portas": [
+    {
+     "x": -0.33,
+     "z": -3.5
+    }
+   ],
+   "escada": {
+    "x": 0,
+    "z": 0,
+    "w": 3,
+    "d": 6
+   },
+   "salas": [],
+   "w": 10,
+   "d": 7,
+   "icone": "🍽️",
+   "andar": 0
+  },
+  {
+   "id": "neabi",
+   "nome": "NEABI",
+   "tipo": "predio",
+   "x": 136.5,
+   "z": 48.5,
+   "rot": 0,
+   "andares": 1,
+   "partes": [
+    {
+     "x": 0,
+     "z": 0,
+     "w": 16,
+     "d": 7
+    }
+   ],
+   "portas": [
+    {
+     "x": 1.15,
+     "z": -3.5
+    },
+    {
+     "x": -8,
+     "z": 0
+    }
+   ],
+   "escada": {
+    "x": 0,
+    "z": 0,
+    "w": 3,
+    "d": 6
+   },
+   "salas": [],
+   "w": 16,
+   "d": 7
+  },
+  {
+   "id": "jardim-neabi",
+   "nome": "hortomedicinal",
+   "tipo": "verde",
+   "x": 130,
+   "z": 68,
+   "w": 30,
+   "d": 13,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "calc-entrada",
+   "nome": "Calçada da entrada",
+   "tipo": "caminho",
+   "pontos": [
+    [
+     28,
+     93.5
+    ],
+    [
+     27.5,
+     55.5
+    ],
+    [
+     27.5,
+     32.5
+    ],
+    [
+     27.5,
+     11.5
+    ]
+   ],
+   "larg": 4,
+   "curva": true,
+   "x": 27.75,
+   "z": 52.5,
+   "w": 1,
+   "d": 82,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "calc-patio",
+   "nome": "Calçada do pátio",
+   "tipo": "caminho",
+   "pontos": [
+    [
+     26.5,
+     -15
+    ],
+    [
+     27,
+     -24.5
+    ]
+   ],
+   "larg": 4,
+   "curva": false,
+   "x": 26.75,
+   "z": -19.75,
+   "w": 1,
+   "d": 9.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "a4",
+   "nome": "Árvore",
+   "tipo": "arvore",
+   "x": 89,
+   "z": 26,
+   "w": 11.5,
+   "d": 11.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "a7",
+   "nome": "Árvore",
+   "tipo": "arvore",
+   "x": 83,
+   "z": 48.5,
+   "w": 17,
+   "d": 17,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "txt-leopoldo",
+   "nome": "Av. Leopoldo de Matos",
+   "tipo": "rotulo",
+   "x": -20,
+   "z": -137,
+   "w": 4,
+   "d": 4,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "txt-forte",
+   "nome": "Av. Forte Príncipe",
+   "tipo": "rotulo",
+   "x": -111,
+   "z": -30,
+   "w": 4,
+   "d": 4,
+   "rot": -90,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvgtgn5h55a5",
+   "nome": "Bicicletário",
+   "tipo": "estac",
+   "x": 56.5,
+   "z": 25.5,
+   "w": 43.5,
+   "d": 13,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4835e4wtp",
+   "nome": "refeitorio (em breve)",
+   "tipo": "obra",
+   "x": -63.5,
+   "z": -70,
+   "w": 40.5,
+   "d": 32.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4bs4xhfih",
+   "nome": "Árvore (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 147,
+   "z": 31,
+   "w": 8,
+   "d": 8,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4bsa1bm0l",
+   "nome": "Árvore (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 139.5,
+   "z": 16.5,
+   "w": 8.5,
+   "d": 8.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4bsfltg1",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 86,
+   "z": 68,
+   "w": 14,
+   "d": 14,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4bsk1ejxk",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 143.5,
+   "z": 59.5,
+   "w": 9,
+   "d": 9,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4catlkxkc",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 125,
+   "z": 35.5,
+   "w": 9,
+   "d": 9,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4cbe9j4aq",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 119,
+   "z": 49.5,
+   "w": 9,
+   "d": 9,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4cdsp30s4",
+   "nome": "Árvore (cópia)",
+   "tipo": "arvore",
+   "x": 103.5,
+   "z": 59.5,
+   "w": 17,
+   "d": 17,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4ce21d1ul",
+   "nome": "Árvore (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 108.5,
+   "z": 30.5,
+   "w": 16,
+   "d": 16,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4difl26qk",
+   "nome": "Árvore (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 88.5,
+   "z": 81,
+   "w": 12,
+   "d": 12,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4euhd7qzo",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 146,
+   "z": 72,
+   "w": 8.5,
+   "d": 8.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4ewgh7qsu",
+   "nome": "Árvore (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia) (cópia)",
+   "tipo": "arvore",
+   "x": 111,
+   "z": 80.5,
+   "w": 7.5,
+   "d": 7.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvi4i7v5barj",
+   "nome": "Bebedouro",
+   "tipo": "ponto",
+   "x": 34,
+   "z": -94,
+   "w": 3,
+   "d": 6,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "icone": "🚰",
+   "andar": 0
+  },
+  {
+   "id": "imvi4jl5d3dru",
+   "nome": "bebedouro ",
+   "tipo": "ponto",
+   "x": 4.5,
+   "z": -13,
+   "w": 4,
+   "d": 6,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "icone": "🚰",
+   "andar": 0
+  },
+  {
+   "id": "imvie38iujoaq",
+   "nome": "Portaria",
+   "tipo": "predio",
+   "x": 43.5,
+   "z": 88.5,
+   "w": 10.5,
+   "d": 12,
+   "rot": 90,
+   "andares": 1,
+   "salas": [],
+   "partes": [
+    {
+     "x": -4.25,
+     "z": 2,
+     "w": 10.5,
+     "d": 12
+    }
+   ],
+   "portas": [
+    {
+     "x": -4.25,
+     "z": 8
+    }
+   ],
+   "escada": {
+    "x": -4.25,
+    "z": 2,
+    "w": 3,
+    "d": 6
+   }
+  },
+  {
+   "id": "imvif1l53dgb3",
+   "nome": "Bebedouro",
+   "tipo": "ponto",
+   "x": 34,
+   "z": -94.5,
+   "w": 3,
+   "d": 6,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "icone": "🚰",
+   "andar": 1
+  },
+  {
+   "id": "imvifaqgg1kay",
+   "nome": "Calçada",
+   "tipo": "caminho",
+   "x": 49.5,
+   "z": -62,
+   "w": 1,
+   "d": 7,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "pontos": [
+    [
+     49.5,
+     -58.5
+    ],
+    [
+     49.5,
+     -65.5
+    ],
+    [
+     49.5,
+     -63.5
+    ]
+   ],
+   "larg": 4,
+   "curva": true
+  },
+  {
+   "id": "imvpiia91alw8",
+   "nome": "Calçada",
+   "tipo": "caminho",
+   "x": 30.25,
+   "z": -72,
+   "w": 1,
+   "d": 36,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "pontos": [
+    [
+     30.5,
+     -90
+    ],
+    [
+     30.5,
+     -73
+    ],
+    [
+     30.5,
+     -59
+    ],
+    [
+     30,
+     -54
+    ]
+   ],
+   "larg": 4,
+   "curva": true
+  },
+  {
+   "id": "imvpjxg7s8bdb",
+   "nome": "QUADRA(em breve)",
+   "tipo": "obra",
+   "x": 114.5,
+   "z": -36,
+   "w": 63.5,
+   "d": 32.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  },
+  {
+   "id": "imvpjxx6w4in4",
+   "nome": "Calçada",
+   "tipo": "caminho",
+   "x": 10.25,
+   "z": -57.25,
+   "w": 7.5,
+   "d": 12.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "pontos": [
+    [
+     6.5,
+     -51
+    ],
+    [
+     13.5,
+     -57.5
+    ],
+    [
+     14,
+     -63.5
+    ]
+   ],
+   "larg": 4,
+   "curva": true
+  },
+  {
+   "id": "imvpjzt884zbi",
+   "nome": "Calçada",
+   "tipo": "caminho",
+   "x": 99,
+   "z": 8,
+   "w": 76,
+   "d": 72,
+   "rot": 0,
+   "andares": 1,
+   "salas": [],
+   "pontos": [
+    [
+     61,
+     -28
+    ],
+    [
+     111.5,
+     -6
+    ],
+    [
+     137,
+     44
+    ]
+   ],
+   "larg": 4,
+   "curva": true
+  },
+  {
+   "id": "imvpk52z51wlj",
+   "nome": "bicicletario",
+   "tipo": "estac",
+   "x": -7,
+   "z": 26.5,
+   "w": 55.5,
+   "d": 14.5,
+   "rot": 0,
+   "andares": 1,
+   "salas": []
+  }
+ ]
+}

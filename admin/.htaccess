@@ -1,0 +1,6 @@
+# Painel administrativo: sem listagem de pasta e fora dos buscadores.
+Options -Indexes
+
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>

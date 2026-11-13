@@ -1,0 +1,112 @@
+/* ABERTURA DA HOME
+   Vídeo do logo em tela cheia na primeira visita da sessão (js/abertura.js).
+   Só aparece quando o <html> recebe a classe "com-abertura" (script no cabeçalho):
+   sem JavaScript ou com "menos movimento" ligado, a página abre direto. */
+
+.abertura {
+    display: none;
+}
+
+html.com-abertura body {
+    overflow: hidden;
+}
+
+html.com-abertura .abertura {
+    /* mesma cor do papel do vídeo, para as bordas sumirem no computador */
+    --abertura-fundo: #eaece1;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(ellipse at center, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
+        var(--abertura-fundo);
+    opacity: 1;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.abertura-video {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    /* as laterais do vídeo vertical se misturam com o fundo */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
+
+/* celular em pé: o vídeo (9:16) ocupa a tela inteira */
+@media (max-aspect-ratio: 10/16) {
+    .abertura-video {
+        width: 100%;
+        object-fit: cover;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+}
+
+.abertura-pular {
+    position: absolute;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid rgba(11, 94, 51, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #0b5e33;
+    font: 600 0.95rem/1 Inter, system-ui, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(15, 122, 67, 0.15);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.abertura-pular:hover {
+    background: #fff;
+    transform: translateY(-1px);
+}
+
+.abertura-pular:focus-visible {
+    outline: 3px solid #0f7a43;
+    outline-offset: 3px;
+}
+
+/* barrinha de progresso, só decorativa */
+.abertura-progresso {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: #0f7a43;
+    transform-origin: left center;
+    transform: scaleX(0);
+}
+
+html.com-abertura .abertura.saindo {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* a página "chega" por baixo enquanto a abertura some */
+html.com-abertura .abertura.saindo ~ * {
+    animation: abertura-entrada 0.7s ease both;
+}
+
+@keyframes abertura-entrada {
+    from { opacity: 0.4; transform: scale(0.985); }
+    to { opacity: 1; transform: none; }
+}
+
+@media print {
+    .abertura { display: none !important; }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Troquem SEU-DOMINIO-AQUI pelo domínio real antes de publicar o site. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/index.php</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/categorias.php</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/mapa.php</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/sobre.php</loc>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/contato.php</loc>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/acessibilidade.php</loc>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://SEU-DOMINIO-AQUI.edu.br/privacidade.php</loc>
+        <priority>0.3</priority>
+    </url>
+</urlset>

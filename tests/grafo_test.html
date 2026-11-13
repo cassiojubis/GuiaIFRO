@@ -1,0 +1,106 @@
+<!doctype html>
+<!--
+    Testes do grafo e do menor caminho (js/grafo.js).
+    Sem framework: cada teste é uma comparação simples.
+
+    Rodar: C:\xampp\php\php.exe tests\grafo_test.php   (abre este arquivo no Chrome/Edge sem janela)
+    ou abrir este arquivo direto no navegador.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Testes do grafo</title>
+<script src="../js/grafo.js"></script>
+</head>
+<body>
+<pre id="resultado">Precisa de JavaScript.</pre>
+<script>
+'use strict';
+const linhas = [];
+let total = 0, falhas = 0;
+
+function confere(descricao, esperado, obtido) {
+    total++;
+    const a = JSON.stringify(esperado), b = JSON.stringify(obtido);
+    if (a === b) {
+        linhas.push(`  ok   ${descricao}`);
+        return;
+    }
+    falhas++;
+    linhas.push(`  FALHOU ${descricao}: esperava ${a}, veio ${b}`);
+}
+const arredonda = (n) => Math.round(n * 10) / 10;
+
+try {
+    /* ---------------- Dijkstra num grafo pequeno ---------------- */
+    const { criarGrafo, menorCaminho, montarGrafoDoPredio, rota } = window.Grafo;
+
+    // A ──10── B      o caminho direto A-B (10) é mais longo que A-C-B (3 + 4 = 7)
+    //  \      /
+    //   3    4
+    //    \  /
+    //     C        D (sozinho, sem nenhuma aresta)
+    const g = criarGrafo();
+    g.adicionarNo('A', 't', 0, 0);
+    g.adicionarNo('B', 't', 10, 0);
+    g.adicionarNo('C', 't', 5, 1);
+    g.adicionarNo('D', 't', 50, 50);
+    g.ligar('A', 'B', 10);
+    g.ligar('A', 'C', 3);
+    g.ligar('C', 'B', 4);
+
+    confere('escolhe o desvio mais curto em vez da aresta direta', { nos: ['A', 'C', 'B'], distancia: 7 }, menorCaminho(g, 'A', 'B'));
+    confere('as arestas valem nos dois sentidos', { nos: ['B', 'C', 'A'], distancia: 7 }, menorCaminho(g, 'B', 'A'));
+    confere('origem igual ao destino: distância zero', { nos: ['A'], distancia: 0 }, menorCaminho(g, 'A', 'A'));
+    confere('nó sem ligação: não há caminho', null, menorCaminho(g, 'A', 'D'));
+    confere('nó que não existe: não há caminho', null, menorCaminho(g, 'A', 'Z'));
+
+    const g2 = criarGrafo();
+    g2.adicionarNo('P', 't', 0, 0);
+    g2.adicionarNo('Q', 't', 3, 4);
+    g2.ligar('P', 'Q');
+    confere('sem peso informado, o peso é a distância em linha reta (3-4-5)', 5, menorCaminho(g2, 'P', 'Q').distancia);
+
+    /* ---------------- prédio de teste (mesmas medidas do js/mapa.js) ---------------- */
+    // a e b ficam frente a frente na ala esquerda do térreo; c na ala direita do térreo; d no 1º andar
+    const predio = montarGrafoDoPredio({
+        XC: 13.6, S0: 5, S1: 12, STAIR_RUN: 7, PORTAO_X: -18.5, FAIXA_ESCADA: 1.15,
+        salas: [
+            { id: 'a', andar: 'terreo', dentro: [10.7, -5], corredor: [13.6, -5] },
+            { id: 'b', andar: 'terreo', dentro: [16.5, -5], corredor: [13.6, -5] },
+            { id: 'c', andar: 'terreo', dentro: [10.7, 8], corredor: [13.6, 8] },
+            { id: 'd', andar: 'andar1', dentro: [10.7, 6], corredor: [13.6, 6] },
+        ],
+    });
+
+    const ab = menorCaminho(predio, 'sala:a', 'sala:b');
+    confere('salas frente a frente dividem o mesmo ponto do corredor', ['sala:a', 'terreo:corredor:-5.000', 'sala:b'], ab.nos);
+    confere('salas frente a frente: só atravessa o corredor (2,9 + 2,9 m)', 5.8, arredonda(ab.distancia));
+
+    const pc = menorCaminho(predio, 'portao', 'sala:c');
+    confere('sala da ala direita: contorna a escada pela direita', true, pc.nos.includes('contorno:1') && !pc.nos.includes('contorno:-1'));
+    confere('sala do térreo: não usa a escada', false, pc.nos.includes('escada:andar1'));
+
+    const pd = rota(predio, 'portao', 'sala:d');
+    confere('sala do 1º andar: um trecho por andar, na ordem', ['terreo', 'andar1'], pd.trechos.map((t) => t.andar));
+    // 18,4 (portão→entrada) + 4,1 (→saguão) + 1,5 (→pé da escada) + 7 (escada) + 2,1 (→corredor) + 6 (corredor) + 2,9 (→dentro)
+    confere('sala do 1º andar: distância soma todos os trechos, escada inclusa', 42, arredonda(pd.distancia));
+    confere('trecho do térreo termina no pé da escada', [5.5, 0], pd.trechos[0].pontos[pd.trechos[0].pontos.length - 1]);
+    confere('trecho do 1º andar começa no topo da escada', [11.5, 0], pd.trechos[1].pontos[0]);
+
+    const dc = rota(predio, 'sala:d', 'sala:c');
+    confere('descendo: começa no 1º andar e termina no térreo', ['andar1', 'terreo'], dc.trechos.map((t) => t.andar));
+    confere('ida e volta têm a mesma distância', arredonda(rota(predio, 'sala:c', 'sala:d').distancia), arredonda(dc.distancia));
+    confere('rota termina dentro da sala de destino', [10.7, 8], dc.trechos[1].pontos[dc.trechos[1].pontos.length - 1]);
+} catch (erro) {
+    falhas++;
+    linhas.push(`  ERRO ${erro.message}`);
+}
+
+linhas.push('', `${total - falhas} de ${total} testes passaram.`);
+const saida = document.getElementById('resultado');
+saida.textContent = linhas.join('\n');
+saida.dataset.falhas = String(falhas);
+</script>
+</body>
+</html>
