@@ -627,14 +627,17 @@ DROP PROCEDURE IF EXISTS sp_registrar_excecao_horario;
 
 DELIMITER $$
 
+-- Os parâmetros de texto declaram o collation das tabelas (utf8mb4_unicode_ci).
+-- Sem isso eles herdam o padrão do BANCO, e se o banco foi criado com outro
+-- (ex.: utf8mb4_general_ci pelo phpMyAdmin) dá "Illegal mix of collations".
 CREATE PROCEDURE sp_registrar_excecao_horario(
     IN p_usuario_id INT UNSIGNED,
-    IN p_setor_id   VARCHAR(60),
+    IN p_setor_id   VARCHAR(60)  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     IN p_data       DATE,
     IN p_fechado    TINYINT,
     IN p_abre       TIME,
     IN p_fecha      TIME,
-    IN p_motivo     VARCHAR(150)
+    IN p_motivo     VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 )
 BEGIN
     DECLARE v_nome_usuario VARCHAR(150);

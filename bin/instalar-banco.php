@@ -67,6 +67,9 @@ try {
 
 echo "Criando o banco {$nomeBanco} (se não existir)...\n";
 $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$nomeBanco}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+// Se o banco já existia com outro padrão (ex.: criado no phpMyAdmin com utf8mb4_general_ci),
+// alinha com o das tabelas: procedure/trigger herdam o padrão do banco.
+$pdo->exec("ALTER DATABASE `{$nomeBanco}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 
 echo "Criando o usuário {$usuarioSite} com permissões mínimas...\n";
 $senhaSql = $pdo->quote($config['senha']);
