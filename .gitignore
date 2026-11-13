@@ -9,3 +9,6 @@ logs/
 # Mapa do campus salvo pelo admin: a cópia anterior e o temporário da gravação
 data/mapa-campus-anterior.json
 data/*.tmp
+
+# Chave secreta gerada nesta máquina (nunca vai para o GitHub)
+storage/segredo.key

@@ -54,7 +54,7 @@ if (ehPost()) {
                 }
             }
         }
-        // Faixas do mesmo dia não podem se sobrepor (o banco também recusa: trigger em sql/regras-de-negocio.sql).
+        // Faixas do mesmo dia não podem se sobrepor (o banco também recusa: trigger no fim do sql/guiaifro.sql).
         foreach (range(0, 6) as $dia) {
             $doDia = array_values(array_filter($faixas, static function ($faixa) use ($dia) { return $faixa['dia_semana'] === $dia; }));
             usort($doDia, static function ($a, $b) { return strcmp($a['abre'], $b['abre']); });

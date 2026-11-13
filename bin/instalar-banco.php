@@ -92,14 +92,9 @@ try {
 $pdo->exec("USE `{$nomeBanco}`");
 $pdo->exec("SET time_zone = '" . (new DateTime())->format('P') . "'");
 
-echo "Criando as tabelas...\n";
-$schema = file_get_contents(__DIR__ . '/../sql/guiaifro.sql');
-// Tira os comentários de linha e separa os comandos pelo ";" no fim da linha.
-$schema = preg_replace('/^\s*--.*$/m', '', $schema);
-foreach (preg_split('/;\s*$/m', $schema) as $comando) {
-    if (trim($comando) !== '') {
-        $pdo->exec($comando);
-    }
+echo "Criando as tabelas, a view, a procedure e os triggers...\n";
+foreach (comandosSql(file_get_contents(__DIR__ . '/../sql/guiaifro.sql')) as $comando) {
+    $pdo->exec($comando);
 }
 
 aplicarAtualizacoesDeEstrutura($pdo, $nomeBanco);
@@ -131,6 +126,41 @@ foreach (['categoria', 'setor', 'sala', 'faq', 'noticia', 'usuario'] as $tabela)
     echo str_pad($tabela, 12) . ': ' . $pdo->query("SELECT COUNT(*) FROM {$tabela}")->fetchColumn() . "\n";
 }
 echo "\nPronto. O site já pode usar o banco.\n";
+
+/**
+ * Separa um arquivo .sql em comandos, como o cliente mysql faz:
+ * tira as linhas de comentário (--), termina cada comando no ";" do fim da linha
+ * e respeita o "DELIMITER $$" usado em procedure e trigger (lá dentro o ";" não
+ * termina o comando, só o "$$"). A linha DELIMITER em si não vai para o banco.
+ */
+function comandosSql(string $sql): array
+{
+    $comandos = [];
+    $delimitador = ';';
+    $atual = '';
+    foreach (preg_split('/\R/', $sql) as $linha) {
+        if (preg_match('/^\s*--/', $linha)) {
+            continue;
+        }
+        if (preg_match('/^\s*DELIMITER\s+(\S+)\s*$/i', $linha, $m)) {
+            $delimitador = $m[1];
+            continue;
+        }
+        $atual .= $linha . "\n";
+        $fim = rtrim($linha);
+        if ($fim !== '' && substr($fim, -strlen($delimitador)) === $delimitador) {
+            $comando = trim(substr(rtrim($atual), 0, -strlen($delimitador)));
+            if ($comando !== '') {
+                $comandos[] = $comando;
+            }
+            $atual = '';
+        }
+    }
+    if (trim($atual) !== '') {
+        $comandos[] = trim($atual);
+    }
+    return $comandos;
+}
 
 /**
  * Mudanças de estrutura em tabelas que já existem (coluna nova etc.).
