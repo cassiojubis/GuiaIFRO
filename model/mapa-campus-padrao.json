@@ -1244,30 +1244,6 @@
    "salas": []
   },
   {
-   "id": "txt-leopoldo",
-   "nome": "Av. Leopoldo de Matos",
-   "tipo": "rotulo",
-   "x": -20,
-   "z": -137,
-   "w": 4,
-   "d": 4,
-   "rot": 0,
-   "andares": 1,
-   "salas": []
-  },
-  {
-   "id": "txt-forte",
-   "nome": "Av. Forte Príncipe",
-   "tipo": "rotulo",
-   "x": -111,
-   "z": -30,
-   "w": 4,
-   "d": 4,
-   "rot": -90,
-   "andares": 1,
-   "salas": []
-  },
-  {
    "id": "imvgtgn5h55a5",
    "nome": "Bicicletário",
    "tipo": "estac",

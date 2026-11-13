@@ -742,12 +742,7 @@ function draw() {
   el('feDropShadow', { dx: 0, dy: .8, stdDeviation: 1, 'flood-color': '#10202f', 'flood-opacity': .22 }, sh);
   const ph = el('pattern', { id: 'cm-hatch', width: 3, height: 3, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
   el('rect', { width: 3, height: 3, fill: 'var(--cm-work)' }, ph); el('rect', { width: 1.2, height: 3, fill: 'var(--cm-fg)', opacity: .3 }, ph);
-  el('rect', { x: l.x0 - 800, y: l.z0 - 800, width: l.x1 - l.x0 + 1600, height: l.z1 - l.z0 + 1600, fill: 'var(--cm-grass-2)' }, svg);
-  const ruas = el('g', {}, svg), X0 = l.x0 - 800, LW = l.x1 - l.x0 + 1600;
-  [[X0, l.z1 + 6, LW, 16], [X0, l.z0 - 12, LW, 10]].forEach(([x, y, w, h]) => el('rect', { x, y, width: w, height: h, fill: 'var(--cm-street)' }, ruas));
-  [[l.x0 - 16, l.z0 - 800, 10, l.z1 - l.z0 + 1600], [l.x1 + 8, l.z0 - 800, 10, l.z1 - l.z0 + 1600]].forEach(([x, y, w, h]) => el('rect', { x, y, width: w, height: h, fill: 'var(--cm-street)' }, ruas));
-  el('line', { x1: X0, y1: l.z1 + 14, x2: X0 + LW, y2: l.z1 + 14, stroke: 'var(--cm-street-line)', 'stroke-width': .5, 'stroke-dasharray': '4 4' }, ruas);
-  el('text', { x: (l.x0 + l.x1) / 2 + 40, y: l.z1 + 16.2, class: 'cm-alb', style: 'font-size:3px' }, ruas).textContent = L('Avenida', 'Avenida');
+  // só o terreno do campus: fora da cerca não desenha rua nem grama (fica o fundo neutro do .cm-stage)
   el('rect', { x: l.x0, y: l.z0, width: l.x1 - l.x0, height: l.z1 - l.z0, fill: 'var(--cm-grass)' }, svg);
   if (FUNDO && FUNDO.src && FUNDO.ver !== false && editavel) {
     el('image', { href: FUNDO.src, x: FUNDO.x - FUNDO.w / 2, y: FUNDO.z - FUNDO.h / 2, width: FUNDO.w, height: FUNDO.h, preserveAspectRatio: 'none', opacity: FUNDO.op == null ? .6 : FUNDO.op, transform: FUNDO.rot ? `rotate(${FUNDO.rot} ${FUNDO.x} ${FUNDO.z})` : '', 'pointer-events': 'none' }, svg);
@@ -872,17 +867,21 @@ function drawRota(g) {
     if (i === 0 && origem) rotulo(first, L('Você está aqui', 'Usted está aquí'));
     if (i === segs.length - 1) { ring = el('circle', { cx: last[0], cy: last[1], r: 2, fill: 'none', stroke: 'var(--cm-accent)', 'stroke-width': .5 }, g); el('circle', { cx: last[0], cy: last[1], r: 1.5, fill: 'var(--cm-accent-ink)', stroke: 'var(--cm-accent)', 'stroke-width': .7 }, g); }
     else rotulo(last, segs[i + 1].andar > sg.andar ? L(`↑ suba a escada (${ANDARES[segs[i + 1].andar]})`, `↑ suba la escalera (${ANDARES[segs[i + 1].andar]})`) : L(`↓ desça a escada (${ANDARES[segs[i + 1].andar]})`, `↓ baje la escalera (${ANDARES[segs[i + 1].andar]})`));
-    const dot = el('circle', { r: 1.2, fill: 'var(--cm-accent-ink)', stroke: 'var(--cm-accent)', 'stroke-width': .5 }, g);
-    linhas.push({ base, flow, dot, len: base.getTotalLength() });
+    // pontinho que anda pela rota: laranja (--cm-walker) com borda branca e um brilho em volta
+    const halo = el('circle', { r: 3, fill: 'var(--cm-walker)', opacity: .3, 'pointer-events': 'none' }, g);
+    const dot = el('circle', { r: 1.7, fill: 'var(--cm-walker)', stroke: '#fff', 'stroke-width': .6, 'pointer-events': 'none' }, g);
+    linhas.push({ base, flow, dot, halo, len: base.getTotalLength() });
   });
   if (!linhas.length) return;
   const t0 = performance.now(), reduz = reduzMov();
   const loop = (now) => {
     if (!svg.isConnected || !linhas[0].dot.isConnected) return;
     const t = (now - t0) / 1000;
-    linhas.forEach(({ base, flow, dot, len }) => {
+    linhas.forEach(({ base, flow, dot, halo, len }) => {
       const k = reduz ? 1 : ((t * 22) % (len + 20)) / len, pt = base.getPointAtLength(Math.min(1, k) * len);
       dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); dot.setAttribute('opacity', k > 1 ? 0 : 1);
+      halo.setAttribute('cx', pt.x); halo.setAttribute('cy', pt.y); halo.setAttribute('opacity', k > 1 ? 0 : .3);
+      if (!reduz) halo.setAttribute('r', 2.6 + Math.sin(t * 6) * .6);
       if (!reduz) flow.setAttribute('stroke-dashoffset', -t * 6);
     });
     if (ring && !reduz) { const p = (t % 1.6) / 1.6; ring.setAttribute('r', 2 + p * 5); ring.setAttribute('opacity', 1 - p); }
@@ -944,11 +943,28 @@ const ptrs = new Map();
 let drag = null;
 const pd2 = () => { if (ptrs.size < 2) return 0; const [a, c] = [...ptrs.values()]; return Math.hypot(a[0] - c[0], a[1] - c[1]); };
 function mundo(cx, cy) { const r = svg.getBoundingClientRect(), sc = escala(), ox = (r.width - vb.w * sc) / 2, oy = (r.height - vb.h * sc) / 2; return { x: vb.x + (cx - r.left - ox) / sc, z: vb.y + (cy - r.top - oy) / sc }; }
-function zoomAt(f, cx, cy) {
-  const m = mundo(cx, cy), nw = clamp(vb.w * f, 8, 900), k = nw / vb.w;
-  vb.x = m.x - (m.x - vb.x) * k; vb.y = m.z - (m.z - vb.y) * k; vb.w = nw; vb.h *= k; setVB();
+// Visitante: não deixa afastar além do campus inteiro, aproximar demais nem arrastar o campus para fora da tela.
+// No editor fica mais solto (precisa ver/arrastar a cerca).
+const ZOOM_MIN_W = 18;
+function limitaVB() {
+  if (tab === 'edit') return;
+  const l = S.limite, maxW = fit().w * 1.1, cx0 = vb.x + vb.w / 2, cy0 = vb.y + vb.h / 2;
+  const w = clamp(vb.w, ZOOM_MIN_W, maxW), k = w / vb.w; vb.w = w; vb.h *= k;
+  const cx = clamp(cx0, l.x0, l.x1), cy = clamp(cy0, l.z0, l.z1);
+  vb.x = cx - vb.w / 2; vb.y = cy - vb.h / 2;
 }
-svg.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(e.deltaY > 0 ? 1.12 : 1 / 1.12, e.clientX, e.clientY); }, { passive: false });
+function zoomAt(f, cx, cy) {
+  vbAnim++; // o usuário mexeu: para a animação de enquadrar, senão ela "puxa" o zoom de volta
+  const m = mundo(cx, cy), nw = clamp(vb.w * f, 8, 900), k = nw / vb.w;
+  vb.x = m.x - (m.x - vb.x) * k; vb.y = m.z - (m.z - vb.y) * k; vb.w = nw; vb.h *= k; limitaVB(); setVB();
+}
+// rodinha/touchpad: zoom proporcional ao quanto rolou (antes cada evento dava 12%, e o touchpad manda dezenas por segundo)
+svg.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  let d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
+  if (e.ctrlKey) d *= 4; // gesto de pinça no touchpad chega como ctrl+wheel com valores pequenos
+  zoomAt(Math.exp(clamp(d, -100, 100) * .0016), e.clientX, e.clientY);
+}, { passive: false });
 function alvoDo(t) {
   const h = t.closest('[data-handle]'); if (h) return { kind: 'handle', key: h.dataset.handle };
   if (t.closest('[data-portao]')) return { kind: 'portao' };
@@ -1020,8 +1036,8 @@ svg.addEventListener('pointermove', (e) => {
     aplicaArrasto(drag.obj, dx / sc, dy / sc, e);
     return;
   }
-  if (!drag.moved && Math.hypot(dx, dy) > 7) { drag.moved = true; clearTimeout(drag.timer); }
-  if (drag.moved) { vb.x = drag.vx - dx / sc; vb.y = drag.vy - dy / sc; setVB(); }
+  if (!drag.moved && Math.hypot(dx, dy) > 7) { drag.moved = true; clearTimeout(drag.timer); vbAnim++; drag.vx = vb.x; drag.vy = vb.y; drag.x = e.clientX; drag.y = e.clientY; return; }
+  if (drag.moved) { vb.x = drag.vx - dx / sc; vb.y = drag.vy - dy / sc; limitaVB(); setVB(); }
 });
 const lv = (b, mx, mz) => { const a = -rad(b.rot || 0); return { x: mx * Math.cos(a) - mz * Math.sin(a), z: mx * Math.sin(a) + mz * Math.cos(a) }; };
 // bordas para o ímã: paredes das outras salas do mesmo andar e das partes do prédio
@@ -1421,7 +1437,7 @@ function panelEdit() {
   }
   if (sel && sel.t === 'cerca') {
     const l = S.limite;
-    body.innerHTML = `<button class="cm-back" data-acao="volta" type="button">← Voltar</button><div><div class="cm-eyebrow">Terreno</div><h2 class="cm-h">Cerca do campus</h2></div><p class="cm-hint">Puxe as bolinhas verdes nos lados da cerca, ou ajuste aqui. As ruas acompanham a cerca.</p>
+    body.innerHTML = `<button class="cm-back" data-acao="volta" type="button">← Voltar</button><div><div class="cm-eyebrow">Terreno</div><h2 class="cm-h">Cerca do campus</h2></div><p class="cm-hint">Puxe as bolinhas verdes nos lados da cerca, ou ajuste aqui.</p>
       ${campoNum('x0', 'Lado esquerdo', l.x0, -500, 500, 1, ' m')}${campoNum('x1', 'Lado direito', l.x1, -500, 500, 1, ' m')}${campoNum('z0', 'Lado de cima', l.z0, -500, 500, 1, ' m')}${campoNum('z1', 'Lado de baixo (avenida)', l.z1, -500, 500, 1, ' m')}
       <hr class="cm-hr"><p class="cm-hint">O mapa fica "reto" pelo prédio principal. A seta do norte (canto do mapa) mostra para onde fica o norte de verdade.</p>
       ${campoNum('norte', 'Direção do norte', S.norte || 0, -180, 180, .5, '°')}`;
@@ -1878,7 +1894,7 @@ function init3() {
   const labels = new THREE.CSS2DRenderer(); labels.domElement.style.cssText = 'position:absolute;inset:0;pointer-events:none'; box.appendChild(labels.domElement);
   const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, 1, 3000);
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 20; controls.maxDistance = 900;
+  controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 20; controls.maxDistance = 480; // ~ a vista do botão "início" (campus inteiro) com folga; antes 900 sumia no horizonte
   scene.add(new THREE.HemisphereLight(0xdfefff, 0x5c7a4e, .75));
   const sun = new THREE.DirectionalLight(0xfff1dc, 1.05); sun.position.set(-140, 220, 160); sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -260, right: 260, top: 260, bottom: -260, far: 800 }); sun.shadow.bias = -0.0006; scene.add(sun, sun.target);
@@ -1941,10 +1957,9 @@ function build3() {
   Object.values(T3.mats).forEach((m) => { if (m.map) m.map.dispose(); m.dispose(); }); T3.mats = {};
   T3.picks = []; T3.roomLabels = [];
   const l = S.limite;
-  const chao = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), mat('var(--cm-grass-2)')); chao.rotation.x = -Math.PI / 2; chao.position.set((l.x0 + l.x1) / 2, -.05, (l.z0 + l.z1) / 2); chao.receiveShadow = true; W3.add(chao);
+  // fora da cerca: chão neutro, sem grama nem rua (só o campus aparece)
+  const chao = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), mat('var(--cm-bg)')); chao.rotation.x = -Math.PI / 2; chao.position.set((l.x0 + l.x1) / 2, -.05, (l.z0 + l.z1) / 2); chao.receiveShadow = true; W3.add(chao);
   const terreno = new THREE.Mesh(new THREE.PlaneGeometry(l.x1 - l.x0, l.z1 - l.z0), mat('var(--cm-grass)')); terreno.rotation.x = -Math.PI / 2; terreno.position.set((l.x0 + l.x1) / 2, 0, (l.z0 + l.z1) / 2); terreno.receiveShadow = true; W3.add(terreno);
-  const rua = mat('var(--cm-street)'), E0 = l.x0 - 1000, E1 = l.x1 + 1000, N0 = l.z0 - 1000, N1 = l.z1 + 1000;
-  [[E0, E1, l.z1 + 6, l.z1 + 22], [E0, E1, l.z0 - 12, l.z0 - 2], [l.x0 - 16, l.x0 - 6, N0, N1], [l.x1 + 8, l.x1 + 18, N0, N1]].forEach(([a, b2, c, d]) => caixa(a, b2, c, d, -.04, .06, rua, false));
   const muro = mat('#c9d1d8'), mm = .4, G = S.portao;
   caixa(l.x0, l.x1, l.z0 - mm, l.z0 + mm, 0, 1.6, muro); caixa(l.x0 - mm, l.x0 + mm, l.z0, l.z1, 0, 1.6, muro); caixa(l.x1 - mm, l.x1 + mm, l.z0, l.z1, 0, 1.6, muro);
   if (G.x - 7 > l.x0) caixa(l.x0, G.x - 7, l.z1 - mm, l.z1 + mm, 0, 1.6, muro); if (G.x + 7 < l.x1) caixa(G.x + 7, l.x1, l.z1 - mm, l.z1 + mm, 0, 1.6, muro);
@@ -2043,7 +2058,7 @@ function buildRoute3() {
   const tex = new THREE.CanvasTexture(cv); tex.wrapS = THREE.RepeatWrapping; tex.repeat.x = path.getLength() / 6; tex.encoding = THREE.sRGBEncoding;
   const group = new THREE.Group();
   group.add(new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(40, path.curves.length * 30), .55, 8, false), new THREE.MeshBasicMaterial({ map: tex })));
-  const dot = new THREE.Mesh(new THREE.SphereGeometry(1.2, 20, 14), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x0f7a43, emissiveIntensity: .35 })); group.add(dot);
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(1.5, 20, 14), new THREE.MeshStandardMaterial({ color: 0xff6a00, emissive: 0xff6a00, emissiveIntensity: .55 })); group.add(dot);
   let ring = null; const fim = v[v.length - 1];
   if (chega) { ring = new THREE.Mesh(new THREE.RingGeometry(1.4, 1.9, 40), new THREE.MeshBasicMaterial({ color: 0x0f7a43, transparent: true, side: THREE.DoubleSide })); ring.rotation.x = -Math.PI / 2; ring.position.copy(fim).setY(fim.y + .1); group.add(ring); }
   T3.world.add(group); T3.route = { group, curve: path, dot, tex, ring };

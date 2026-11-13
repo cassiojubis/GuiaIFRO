@@ -21,6 +21,7 @@
     --cm-sideA: #d9eaf8; --cm-sideB: #ece4fa; --cm-big: #fde7c8;
     --cm-park: #c7cbd1; --cm-field: #8fc47e; --cm-sand: #ecd59c; --cm-woods: #5e9e5a; --cm-tree: #6fb77a; --cm-work: #f2c94c;
     --cm-red: #cd191e;
+    --cm-walker: #ff6a00; /* pontinho que anda na rota: laranja forte, destaca no verde */
     --cm-cat-aula: #d6e8fb; --cm-cat-lab: #cdeedd; --cm-cat-banheiro: #dff3f8; --cm-cat-adm: #e8e1fa; --cm-cat-atend: #fdf0c4; --cm-cat-grande: #fde3c3; --cm-cat-apoio: #fbe0ec; --cm-cat-outro: #eceff2;
 
     display: grid;
@@ -42,6 +43,7 @@ html.tema-escuro .cm {
     --cm-sideA: #1d3249; --cm-sideB: #2c2447; --cm-big: #4a3a22;
     --cm-park: #3a424c; --cm-field: #2f6a3e; --cm-sand: #7a6a3a; --cm-woods: #234d32; --cm-tree: #2f7a4d; --cm-work: #8a7020;
     --cm-red: #e0454a;
+    --cm-walker: #ff8a1f;
     --cm-cat-aula: #1f3b5c; --cm-cat-lab: #1d4a36; --cm-cat-banheiro: #1d4450; --cm-cat-adm: #322a52; --cm-cat-atend: #4d4220; --cm-cat-grande: #4f3a20; --cm-cat-apoio: #4d2438; --cm-cat-outro: #2c3540;
 }
 .cm *, .cm *::before, .cm *::after { box-sizing: border-box; }
@@ -107,7 +109,7 @@ html.tema-escuro .cm {
 .cm-hr { border: 0; border-top: 1px solid var(--cm-border); margin: 2px 0; width: 100%; }
 
 /* ---------- palco ---------- */
-.cm-stage { position: relative; overflow: hidden; min-width: 0; min-height: 0; background: var(--cm-grass-2); }
+.cm-stage { position: relative; overflow: hidden; min-width: 0; min-height: 0; background: var(--cm-bg); }
 .cm-svg, .cm-three { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cm-svg { touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; display: block; }
 .cm-svg:active { cursor: grabbing; }

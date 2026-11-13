@@ -83,18 +83,14 @@ contato_mensagem  cont_nome, cont_email, cont_telefone, cont_assunto, cont_mensa
   no banco do Guia. Nunca usar root no site.
 - Toda alteração feita pelo admin vai para `auditoria` (antes/depois em JSON).
 
-## View, procedure e trigger (`sql/regras-de-negocio.sql`)
+## View, procedure e triggers (regras de negócio no banco)
 
-Rodar no Workbench depois do `guiaifro.sql` (o instalador não roda esse arquivo,
-porque procedure e trigger usam `DELIMITER`). As regras estão comentadas no arquivo.
+Ficam no fim do `sql/guiaifro.sql` (autor: Cayo Rodrigues do Santos) e são criados pelo
+`bin/instalar-banco.php`, que entende o `DELIMITER $$` usado na procedure e nos triggers.
 
-- **View `vw_situacao_setores_hoje`**: cada setor ativo com onde fica, o horário de hoje
-  e se está "Aberto agora", "Fechado agora" ou "Fechado hoje" (feriado/recesso vence o
-  horário normal; horário especial do dia substitui o normal).
-- **Procedure `sp_registrar_excecao_horario`**: cadastra feriado, recesso ou horário
-  especial de um setor ou do campus inteiro, validando permissão (responsável só no
-  setor dele; campus inteiro só o admin geral), data, motivo e duplicidade, e grava
-  na auditoria na mesma transação.
-- **Trigger `trg_horario_valida_inserir` / `trg_horario_valida_alterar`**: o banco recusa
-  horário com dia inválido, hora de fechar antes da de abrir ou faixas que se sobrepõem
-  no mesmo dia. O painel (`setor-horarios.php`) faz a mesma checagem antes de salvar.
+- `vw_situacao_setores_hoje` — cada setor ativo com onde fica, horário de hoje e situação
+  ("Aberto agora", "Fechado hoje", "Horário não informado"...), já contando feriados e horários especiais.
+- `sp_registrar_excecao_horario(usuario, setor, data, fechado, abre, fecha, motivo)` — cadastra feriado,
+  recesso ou horário especial validando permissão, data e duplicidade, e grava na `auditoria` (tudo ou nada).
+- `trg_horario_valida_inserir` / `trg_horario_valida_alterar` — o banco recusa horário com dia inválido,
+  com hora de fechar antes da de abrir ou que se sobrepõe a outra faixa do mesmo setor no mesmo dia.
