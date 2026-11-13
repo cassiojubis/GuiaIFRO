@@ -1,0 +1,972 @@
+/* =====================================================================
+   MAPA DO CAMPUS (mapa.php) - estilos do 2D, do 3D e dos painéis em comum.
+   Usa as variáveis do site (--primary, --surface, --text, --muted, --border...)
+   e acrescenta algumas só do mapa (--mapa-*), que mudam no tema escuro.
+   ===================================================================== */
+
+.mapa-palco {
+    --mapa-fundo: #dfe9e4;       /* céu/fundo do 3D */
+    --mapa-chao: #cfe6c6;        /* gramado do 2D */
+    --mapa-esq: #b79cea;         /* cor da ala esquerda */
+    --mapa-esq-suave: #ece4fa;
+    --mapa-dir: #7fb4e0;         /* cor da ala direita */
+    --mapa-dir-suave: #e0eefa;
+    --mapa-laje: #f4f1ea;
+    --mapa-corredor: #dcd7cb;
+    --mapa-parede: #fdfcf9;
+    --mapa-traco: #8b97a4;
+    --mapa-caminho: #eadbb8;
+    --mapa-arvore: #6fb77a;
+    --mapa-vermelho: #cd191e;
+    --mapa-tinta: #ffffff;       /* texto em cima do verde */
+}
+
+html.tema-escuro .mapa-palco {
+    --mapa-fundo: #14202e;
+    --mapa-chao: #1d3a2b;
+    --mapa-esq: #7a5cb3;
+    --mapa-esq-suave: #2c2447;
+    --mapa-dir: #3f78a8;
+    --mapa-dir-suave: #1d3249;
+    --mapa-laje: #2a3441;
+    --mapa-corredor: #38424f;
+    --mapa-parede: #aab4bf;
+    --mapa-traco: #55677b;
+    --mapa-caminho: #6b6358;
+    --mapa-arvore: #2f7a4d;
+    --mapa-vermelho: #e0454a;
+    --mapa-tinta: #06130c;       /* no escuro o verde é claro, então o texto fica escuro */
+}
+
+/* ---------- seletor 2D | 3D (acima do mapa) ---------- */
+.mapa-secao {
+    padding-top: 28px;
+}
+
+/* ---------- o mesmo mapa na home (view/index.php) ---------- */
+.mapa-home {
+    padding-top: 24px;
+}
+
+.mapa-home-topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 6px 24px;
+    margin-bottom: 14px;
+}
+
+.mapa-home-topo h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.mapa-home-topo h2 .icon {
+    color: var(--primary);
+}
+
+.mapa-home-topo p {
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+}
+
+/* um pouco mais baixo que na página do mapa, pra o resto da home aparecer logo depois */
+.mapa-home .mapa-palco {
+    height: clamp(460px, calc(100vh - 220px), 720px);
+}
+
+/* busca logo embaixo do mapa, da largura dele */
+.mapa-home .hero-search {
+    max-width: none;
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.mapa-barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    margin-bottom: 16px;
+}
+
+.mapa-modo {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.mapa-modo button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.mapa-modo button:hover {
+    color: var(--text);
+}
+
+.mapa-modo button[aria-pressed="true"] {
+    background: var(--primary);
+    color: #fff;
+}
+
+html.tema-escuro .mapa-modo button[aria-pressed="true"] {
+    color: #06130c;
+}
+
+.mapa-barra-texto {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* ---------- o "palco": área onde o 2D e o 3D aparecem ---------- */
+.mapa-palco {
+    position: relative;
+    height: clamp(540px, calc(100vh - 150px), 880px);
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--mapa-chao);
+    box-shadow: var(--shadow);
+    font-size: 0.8rem;
+}
+
+.mapa-palco[data-modo="3d"] {
+    background: var(--mapa-fundo);
+}
+
+.mapa-palco[data-modo="3d"] .mapa2d {
+    display: none;
+}
+
+.mapa2d,
+.mapa3d {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mapa3d[hidden] {
+    display: none;
+}
+
+.mapa3d canvas {
+    display: block;
+    touch-action: none;
+}
+
+.mapa2d {
+    display: block;
+    touch-action: none;  /* o arrastar e a pinça são tratados pelo JavaScript */
+    cursor: grab;
+    user-select: none;
+}
+
+.mapa2d.arrastando {
+    cursor: grabbing;
+}
+
+.mapa-palco .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.mapa-palco :focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ---------- 2D: salas ---------- */
+.mapa-sala {
+    cursor: pointer;
+    outline: none;
+}
+
+.mapa-sala .mapa-sala-fundo {
+    transition: fill 0.15s, stroke 0.15s;
+}
+
+.mapa-sala.esquerda .mapa-sala-fundo { fill: var(--mapa-esq-suave); }
+.mapa-sala.direita .mapa-sala-fundo { fill: var(--mapa-dir-suave); }
+
+.mapa-sala:hover .mapa-sala-fundo {
+    fill: var(--primary);
+    fill-opacity: 0.22;
+}
+
+/* foco do teclado: contorno grosso e tracejado, visível nos dois temas */
+.mapa-sala:focus-visible .mapa-sala-fundo {
+    stroke: var(--primary);
+    stroke-width: 0.5;
+    stroke-dasharray: 0.6 0.3;
+}
+
+.mapa-sala.ativa .mapa-sala-fundo {
+    fill: var(--primary);
+    fill-opacity: 0.95;
+    stroke: var(--primary);
+}
+
+.mapa-sala text {
+    fill: var(--text);
+    font-weight: 700;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.mapa-sala.ativa text {
+    fill: var(--mapa-tinta);
+}
+
+.mapa-etiqueta {
+    font-size: 0.62px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-anchor: middle;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* ---------- 3D: etiquetas em HTML sobre a maquete ---------- */
+.mapa3d-rotulos {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.mapa3d-rotulo {
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+}
+
+.rotulo-sala {
+    max-width: 130px;
+    overflow: hidden;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    color: var(--text);
+    font-size: 10.5px;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.rotulo-sala.ativa {
+    background: var(--primary);
+    color: var(--mapa-tinta);
+    transform: translateY(-3px) scale(1.12);
+}
+
+.rotulo-lugar {
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: #1b2733;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.rotulo-andar {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--mapa-tinta);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: var(--shadow);
+}
+
+.rotulo-destino {
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--mapa-tinta);
+    font-size: 12px;
+    transform: translateY(-26px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- painéis flutuantes (comuns ao 2D e 3D) ---------- */
+.mapa-painel {
+    position: absolute;
+    z-index: 3;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+.mapa-palco button {
+    font-family: inherit;
+}
+
+/* lista de setores */
+.mapa-lista {
+    top: 16px;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    width: min(17rem, 38%);
+    overflow: hidden;
+}
+
+.mapa-busca {
+    position: relative;
+    display: block;
+    margin: 12px;
+}
+
+.mapa-busca .icon {
+    position: absolute;
+    top: 50%;
+    left: 11px;
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    transform: translateY(-50%);
+}
+
+.mapa-busca input {
+    width: 100%;
+    padding: 10px 12px 10px 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    outline: none;
+    background: var(--background);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.8rem;
+}
+
+.mapa-busca input:focus {
+    border-color: var(--primary);
+}
+
+.mapa-lista-salas {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 8px 10px;
+}
+
+.mapa-lista-grupo h3 {
+    margin: 12px 8px 6px;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.mapa-lista-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mapa-lista-item[hidden] {
+    display: none;
+}
+
+.mapa-lista-item:hover {
+    background: var(--background);
+}
+
+.mapa-lista-item i {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.mapa-lista-item.esquerda i { background: var(--mapa-esq); }
+.mapa-lista-item.direita i { background: var(--mapa-dir); }
+
+.mapa-lista-item.ativo {
+    background: var(--primary);
+    color: var(--mapa-tinta);
+}
+
+.mapa-lista-item.ativo i {
+    background: var(--mapa-tinta);
+}
+
+.mapa-lista-vazia {
+    margin: 18px 10px;
+    color: var(--muted);
+}
+
+/* andares + ferramentas, empilhados no canto direito */
+.mapa-controles {
+    position: absolute;
+    z-index: 3;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.mapa-controles .mapa-painel {
+    position: static;
+}
+
+.mapa-andares {
+    display: flex;
+    gap: 3px;
+    padding: 4px;
+}
+
+.mapa-andares button {
+    padding: 9px 14px;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mapa-andares button[aria-pressed="true"] {
+    background: var(--primary);
+    color: var(--mapa-tinta);
+}
+
+.mapa-ferramentas {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+}
+
+.mapa-ferramentas button {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.mapa-ferramentas button[hidden],
+.mapa-andares button[hidden] {
+    display: none;
+}
+
+.mapa-ferramentas button:hover {
+    background: var(--background);
+    color: var(--text);
+}
+
+.mapa-ferramentas button[aria-pressed="true"] {
+    color: var(--primary);
+}
+
+/* cartão com o passo a passo */
+.mapa-info {
+    right: 16px;
+    bottom: 16px;
+    z-index: 4;
+    width: min(20rem, 45%);
+    max-height: calc(100% - 150px);
+    overflow-y: auto;
+    padding: 18px;
+    opacity: 0;
+    visibility: hidden;   /* escondido de verdade: o Tab não entra no cartão fechado */
+    transform: translateY(14px);
+    transition: opacity 0.3s, transform 0.3s, visibility 0s 0.3s;
+}
+
+.mapa-info.aberto {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.mapa-info-andar {
+    margin: 0;
+    color: var(--primary);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.mapa-info h2 {
+    margin: 4px 28px 10px 0;
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+.mapa-info-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mapa-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.mapa-chip {
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.mapa-chip.destaque {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.mapa-passos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: passo;
+}
+
+.mapa-passos li {
+    position: relative;
+    padding: 0 0 12px 34px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    counter-increment: passo;
+}
+
+.mapa-passos li::before {
+    content: counter(passo);
+    position: absolute;
+    top: -1px;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--background);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.mapa-passos li:last-child {
+    padding-bottom: 0;
+}
+
+.mapa-passos li:last-child::before {
+    content: "✓";
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--mapa-tinta);
+}
+
+.mapa-passos li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 24px;
+    bottom: 2px;
+    left: 11px;
+    width: 1px;
+    background: var(--border);
+}
+
+.mapa-info-trecho {
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius);
+    background: none;
+    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mapa-info-trecho[hidden],
+.mapa-info-setor[hidden] {
+    display: none;
+}
+
+.mapa-info-setor {
+    margin-top: 10px;
+}
+
+/* dica, aviso e "carregando" */
+.mapa-dica {
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    left: 50%;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.72rem;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+.mapa-dica.some {
+    opacity: 0;
+}
+
+.mapa-aviso {
+    position: absolute;
+    z-index: 8;
+    top: 16px;
+    left: 50%;
+    max-width: min(440px, calc(100% - 32px));
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    background: #1b2733;
+    color: #fff;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -10px);
+    box-shadow: var(--shadow-lg);
+    transition: opacity 0.3s, transform 0.3s, visibility 0s 0.3s;
+}
+
+.mapa-aviso.visivel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.mapa-carregando {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--mapa-fundo);
+    color: var(--text);
+    font-weight: 700;
+}
+
+.mapa-carregando[hidden] {
+    display: none;
+}
+
+.mapa-carregando-roda {
+    width: 22px;
+    height: 22px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: mapa-girar 0.8s linear infinite;
+}
+
+@keyframes mapa-girar {
+    to { transform: rotate(360deg); }
+}
+
+.mapa-abrir-lista {
+    display: none;
+}
+
+.mapa-sem-js {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    max-width: 280px;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+/* ---------- celular: lista e cartão viram "folhas" que sobem de baixo ---------- */
+@media (max-width: 760px) {
+    .mapa-secao {
+        padding-top: 16px;
+    }
+
+    .mapa-barra-texto {
+        display: none;
+    }
+
+    .mapa-modo {
+        width: 100%;
+    }
+
+    .mapa-modo button {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .mapa-palco {
+        height: clamp(460px, 72vh, 720px);
+        border-radius: var(--radius-lg);
+    }
+
+    .mapa-lista {
+        top: auto;
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        z-index: 6;
+        width: auto;
+        height: 62%;
+        visibility: hidden;
+        transform: translateY(calc(100% + 20px));
+        transition: transform 0.3s, visibility 0s 0.3s;
+    }
+
+    .mapa-lista.aberta {
+        visibility: visible;
+        transform: none;
+        transition: transform 0.3s;
+    }
+
+    .mapa-controles {
+        top: 12px;
+        right: 12px;
+    }
+
+    .mapa-andares button {
+        padding: 8px 10px;
+    }
+
+    .mapa-info {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        z-index: 7;
+        width: auto;
+        max-height: 60%;
+    }
+
+    .mapa-abrir-lista {
+        position: absolute;
+        z-index: 5;
+        bottom: 12px;
+        left: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--primary);
+        color: var(--mapa-tinta);
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+    }
+
+    .mapa-dica {
+        display: none;
+    }
+}
+
+/* Quem pediu "menos movimento" no sistema: sem transições nos painéis */
+@media (prefers-reduced-motion: reduce) {
+    .mapa-info,
+    .mapa-lista,
+    .mapa-aviso,
+    .mapa-dica,
+    .mapa-sala .mapa-sala-fundo,
+    .mapa3d-rotulo {
+        transition: none !important;
+    }
+
+    .mapa-carregando-roda {
+        animation-duration: 2.5s;
+    }
+}
+
+/* Contraste no tema escuro (I1): verde claro com letra escura */
+html.tema-escuro .mapa-abrir-lista,
+html.tema-escuro .mapa-andares button[aria-pressed="true"],
+html.tema-escuro .mapa-lista-item.ativo,
+html.tema-escuro .mapa-modo button[aria-pressed="true"],
+html.tema-escuro .rotulo-andar,
+html.tema-escuro .rotulo-destino,
+html.tema-escuro .rotulo-sala.ativa {
+    color: #052e16;
+}
+
+/* Alto contraste (I1): fundo amarelo pede letra preta */
+html.alto-contraste .mapa-abrir-lista,
+html.alto-contraste .mapa-andares button[aria-pressed="true"],
+html.alto-contraste .mapa-lista-item.ativo,
+html.alto-contraste .mapa-modo button[aria-pressed="true"],
+html.alto-contraste .rotulo-andar,
+html.alto-contraste .rotulo-destino,
+html.alto-contraste .rotulo-sala.ativa {
+    color: #000;
+}
+
+/* Acessibilidade do mapa (I2) */
+.mapa-voltar-2d {
+    position: absolute;
+    top: 0.75rem;
+    left: 50%;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.mapa-voltar-2d[hidden] {
+    display: none;
+}
+
+.mapa2d:focus-visible {
+    outline: 3px solid var(--foco, #1d4ed8);
+    outline-offset: -3px;
+}
+
+/* Passeio pelo 3D (W1) */
+.mapa-passeio {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 40;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-lg);
+    background: rgba(15, 23, 42, 0.88);
+    color: #fff;
+    box-shadow: var(--shadow-lg);
+}
+
+.mapa-passeio[hidden] {
+    display: none;
+}
+
+.mapa-passeio-texto {
+    margin: 0 0 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.mapa-passeio-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mapa-passeio-botoes small {
+    margin-right: auto;
+    opacity: 0.85;
+}
+
+.mapa-passeio-botoes button {
+    min-height: 40px;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+/* "Saindo de" com a mesma margem da busca (antes encostava na borda do painel) */
+.mapa-lista .mapa-origem {
+    margin: 12px 12px 0;
+    min-width: 0;
+}
+
+.mapa-lista .mapa-origem select {
+    width: 100%;
+    min-width: 0;
+}

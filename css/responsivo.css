@@ -1,0 +1,561 @@
+/* GUIA IFRO — RESPONSIVIDADE Mantém o mesmo design do protótipo em tablets e celulares. */
+
+@media (max-width: 1120px) {
+    .hero-video {
+        width: 260px;
+    }
+
+    .hero-video-chip-top {
+        left: -40px;
+    }
+
+    .hero-video-chip-bottom {
+        right: -16px;
+    }
+
+    .desktop-nav {
+        gap: 0;
+    }
+
+    .nav-link {
+        padding-inline: 11px;
+    }
+
+    .navbar-search input {
+        width: 145px;
+    }
+
+    .navbar-search input:focus {
+        width: 190px;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .category-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-home-content {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-video {
+        display: none;
+    }
+
+    .desktop-nav,
+    .desktop-only {
+        display: none !important;
+    }
+
+    .menu-button {
+        display: inline-flex;
+    }
+
+    .mobile-menu {
+        display: flex;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        flex-direction: column;
+        gap: 4px;
+        transition: max-height 0.32s ease, padding 0.32s ease;
+    }
+
+    .mobile-menu.open {
+        max-height: calc(100vh - 64px);
+        padding-top: 14px;
+        padding-bottom: 18px;
+        border-top: 1px solid var(--border);
+        overflow-y: auto;
+    }
+
+    .mobile-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 44px;
+        padding: 10px 14px;
+        border-radius: 11px;
+        font-size: 0.84rem;
+        font-weight: 600;
+    }
+
+    .mobile-link:hover,
+    .mobile-link.active {
+        background: rgba(15, 122, 67, 0.08);
+        color: var(--primary);
+    }
+
+    .mobile-link .icon {
+        width: 15px;
+        height: 15px;
+        opacity: 0.45;
+    }
+
+    .mobile-search {
+        margin-top: 9px;
+    }
+
+    .home-columns,
+    .contact-layout,
+    .about-history-grid,
+    .sector-layout,
+    .map-page-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .map-detail-panel,
+    .sticky-card {
+        position: static;
+    }
+
+    .category-toolbar {
+        flex-direction: column;
+    }
+
+    .category-search {
+        width: 100%;
+        max-width: none;
+    }
+
+    .filter-group {
+        justify-content: flex-start;
+    }
+
+    .info-chip-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-channel-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .timeline::before {
+        left: 8px;
+    }
+
+    .timeline-item,
+    .timeline-item.right {
+        grid-template-columns: minmax(0, 1fr);
+        padding-left: 36px;
+    }
+
+    .timeline-item.right .timeline-card {
+        grid-column: auto;
+    }
+
+    .timeline-dot {
+        left: 8px;
+    }
+
+    .values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    .container {
+        width: min(calc(100% - 24px), var(--container));
+    }
+
+    .brand-copy {
+        display: none;
+    }
+
+    .section {
+        padding-block: 38px;
+    }
+
+    .hero-home-content {
+        padding-top: 24px;
+        padding-bottom: 28px;
+    }
+
+    .official-badge {
+        font-size: 0.7rem;
+    }
+
+    .hero-copy h1 {
+        /* nunca passa de 12vw: com fonte grande o título não sai da tela */
+        font-size: min(clamp(1.9rem, 9vw, 2.6rem), 12vw);
+    }
+
+    .hero-copy > p {
+        font-size: 0.94rem;
+    }
+
+    .hero-search {
+        padding: 8px;
+    }
+
+    .hero-search-row {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hero-search-row > .icon {
+        top: 18px;
+        left: 12px;
+    }
+
+    .hero-search-row input {
+        min-height: 48px;
+        padding: 0 12px 0 40px;
+    }
+
+    .hero-search-row .button {
+        position: static;
+        width: 100%;
+    }
+
+    .search-chips {
+        padding: 4px 3px 2px;
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-card {
+        min-height: 145px;
+    }
+
+    .category-preview-grid,
+    .categories-grid,
+    .values-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .section-heading-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contact-cta,
+    .bottom-green-cta {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 28px 24px;
+    }
+
+    .contact-cta .button,
+    .bottom-green-cta .button {
+        width: 100%;
+    }
+
+    .contact-inline-list {
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .light-header > .container {
+        padding-block: 36px;
+    }
+
+    .page-header h1,
+    .about-hero h1,
+    .contact-hero h1 {
+        /* no tamanho normal dá o mesmo 2.35rem; com fonte grande para na largura da tela */
+        font-size: min(2.35rem, 12vw);
+    }
+
+    .category-card {
+        min-height: auto;
+    }
+
+    .filter-symbol {
+        display: none;
+    }
+
+    .campus-map {
+        min-height: 470px;
+        padding: 16px;
+    }
+
+    .map-blocks-grid {
+        min-height: 410px;
+        gap: 10px;
+    }
+
+    .map-block {
+        min-height: 90px;
+    }
+
+    .map-block-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .map-shortcuts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sector-title-row {
+        flex-direction: column;
+    }
+
+    .sector-name-line {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .info-chip-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .responsible-person {
+        align-items: flex-start;
+    }
+
+    .about-hero > .container:first-of-type {
+        padding-block: 58px 86px;
+    }
+
+    .about-history-grid {
+        gap: 38px;
+        margin-bottom: 68px;
+    }
+
+    .about-values-section {
+        margin-bottom: 68px;
+    }
+
+    .form-grid-two {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contact-form-card {
+        min-height: auto;
+        padding: 22px;
+    }
+
+    /* RODAPÉ CURTINHO NO CELULAR: marca + redes numa linha, blocos que abrem e fecham */
+    .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+        padding-top: 20px;
+        padding-bottom: 6px;
+    }
+
+    .footer-brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 14px;
+    }
+
+    .footer-brand > p {
+        display: none;
+    }
+
+    .footer-logo {
+        margin-bottom: 0;
+        min-width: 0;
+    }
+
+    .footer-logo .brand-logo {
+        width: 34px;
+        height: auto;
+    }
+
+    .footer-logo .brand-copy {
+        display: flex;
+    }
+
+    .social-list {
+        flex-shrink: 0;
+        gap: 4px;
+    }
+
+    .footer-sec {
+        border-top: 1px solid var(--border);
+    }
+
+    .footer-sec > summary {
+        min-height: 48px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .footer-sec > summary:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+    }
+
+    .site-footer .footer-sec h2 {
+        margin: 0;
+        font-size: 0.86rem;
+    }
+
+    .footer-sec-seta {
+        display: block;
+        width: 18px;
+        height: 18px;
+        color: var(--muted);
+        transition: transform var(--transition);
+    }
+
+    .footer-sec[open] .footer-sec-seta {
+        transform: rotate(180deg);
+    }
+
+    .footer-sec > .footer-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 12px;
+        padding-bottom: 12px;
+    }
+
+    .footer-sec .footer-links a {
+        min-height: 40px;
+        font-size: 0.8rem;
+    }
+
+    .footer-sec > .footer-contact {
+        gap: 10px;
+        padding-bottom: 12px;
+    }
+
+    .footer-sec .footer-contact li {
+        font-size: 0.8rem;
+    }
+
+    .footer-admin-login {
+        margin: 0 0 14px;
+    }
+
+    .footer-bottom {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 6px 16px;
+        /* espaço embaixo pros botões flutuantes (acessibilidade e Libras) não cobrirem o texto */
+        padding-block: 14px 84px;
+        font-size: 0.7rem;
+    }
+
+    .footer-bottom > div {
+        gap: 16px;
+    }
+
+    .footer-direitos {
+        display: none;
+    }
+}
+
+@media (max-width: 430px) {
+    .quick-card {
+        padding-inline: 9px;
+    }
+
+    .map-block strong {
+        font-size: 0.67rem;
+    }
+
+    .map-block small {
+        font-size: 0.55rem;
+    }
+
+    .map-entrance {
+        max-width: 88%;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .contact-channel-card {
+        padding: 18px;
+    }
+}
+
+/* MENU QUE CABE NO CABEÇALHO (computador) — etapas ligadas pelo js/script.js (configurarMenuCompacto)
+   quando os links não cabem. A última (menu-compacto) é o botão ☰ do celular, só como último recurso. */
+html.menu-justo .desktop-nav {
+    gap: 0;
+}
+
+html.menu-justo .nav-link {
+    padding-inline: 8px;
+}
+
+html.menu-justo .navbar {
+    gap: 12px;
+}
+
+html.menu-sem-botao .navbar-actions > .button {
+    display: none;
+}
+
+html.menu-sem-busca .navbar-actions .busca-com-sugestoes {
+    display: none;
+}
+
+html.menu-compacto .desktop-nav,
+html.menu-compacto .navbar-actions.desktop-only {
+    display: none !important;
+}
+
+html.menu-compacto .menu-button {
+    display: inline-flex;
+}
+
+html.menu-compacto .mobile-menu {
+    display: flex;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 4px;
+    transition: max-height 0.32s ease, padding 0.32s ease;
+}
+
+html.menu-compacto .mobile-menu.open {
+    max-height: calc(100vh - 64px);
+    padding-top: 14px;
+    padding-bottom: 18px;
+    border-top: 1px solid var(--border);
+    overflow-y: auto;
+}
+
+html.menu-compacto .mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 11px;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+html.menu-compacto .mobile-link:hover,
+html.menu-compacto .mobile-link.active {
+    background: rgba(15, 122, 67, 0.08);
+    color: var(--primary);
+}
+
+html.menu-compacto .mobile-link .icon {
+    width: 15px;
+    height: 15px;
+    opacity: 0.45;
+}
+
+html.menu-compacto .mobile-search {
+    margin-top: 9px;
+}

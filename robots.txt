@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /controller/
+Disallow: /model/
+
+Sitemap: https://SEU-DOMINIO-AQUI.edu.br/sitemap.xml

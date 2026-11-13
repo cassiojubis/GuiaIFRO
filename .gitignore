@@ -1,0 +1,11 @@
+# Segredos deste servidor (senha do admin, conexão com o banco) — cada máquina tem o seu
+config/segredos.php
+config/banco.php
+
+# Logs
+logs/
+*.log
+
+# Mapa do campus salvo pelo admin: a cópia anterior e o temporário da gravação
+data/mapa-campus-anterior.json
+data/*.tmp
