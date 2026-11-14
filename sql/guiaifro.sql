@@ -454,13 +454,14 @@ CREATE TABLE IF NOT EXISTS traducao (
 
 
 -- =============================================================
--- REGRAS DE NEGÓCIO NO BANCO (VIEW, PROCEDURE e TRIGGER)
+-- REGRAS DE NEGÓCIO NO BANCO (VIEW, PROCEDURE, TRIGGER e FUNCTION)
 -- Autor: Cayo Rodrigues do Santos
 -- Data: 13/11/2026
 -- Objetivo: levar para dentro do banco as regras mais importantes do
 -- horário dos setores, para que elas valham mesmo fora do site.
 --
--- Uma VIEW, uma PROCEDURE e um TRIGGER (em duas partes: inserir e alterar).
+-- Uma VIEW, uma PROCEDURE, um TRIGGER (em duas partes: inserir e alterar)
+-- e uma FUNCTION.
 -- Cada objeto é apagado e criado de novo, então dá para rodar outra vez.
 -- O bin/instalar-banco.php entende o DELIMITER usado na procedure e no trigger.
 -- =============================================================
@@ -843,6 +844,101 @@ DELIMITER ;
 
 
 -- =============================================================
+-- 4) FUNCTION — fn_situacao_setor
+-- -------------------------------------------------------------
+-- Autor: equipe Guia IFRO
+-- Data: 13/11/2026
+-- Objetivo: dizer se um setor está aberto em QUALQUER dia e hora, não só
+-- agora. Responde perguntas como "o CRA vai estar aberto sexta às 15h?"
+-- e pode ser usada dentro de qualquer SELECT.
+--
+-- Parâmetros:
+--   p_setor_id  setor (ex.: 'cra')
+--   p_momento   dia e hora a consultar (ex.: '2026-11-20 15:00');
+--               NULL = agora
+--
+-- Retorno (texto):
+--   'Aberto' | 'Fechado' | 'Fechado (feriado/recesso)' |
+--   'Aberto (horário especial)' | 'Fechado (horário especial)' |
+--   'Horário não informado' | 'Setor não encontrado'
+--
+-- Regras de negócio (as mesmas da view, para qualquer momento):
+--   R1. Setor que não existe ou está desativado: 'Setor não encontrado'.
+--   R2. Feriado/recesso naquele dia (do setor ou do campus inteiro)
+--       vence o horário normal.
+--   R3. Horário especial naquele dia substitui o horário normal.
+--   R4. Sem exceção, vale o horário da semana. A hora de fechar já conta
+--       como fechado (08:00–12:00: às 12:00 em ponto está fechado).
+--   R5. Setor sem nenhum horário cadastrado: 'Horário não informado'.
+-- =============================================================
+
+DROP FUNCTION IF EXISTS fn_situacao_setor;
+
+DELIMITER $$
+
+CREATE FUNCTION fn_situacao_setor(
+    p_setor_id VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    p_momento  DATETIME
+)
+RETURNS VARCHAR(40) CHARACTER SET utf8mb4
+NOT DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE v_data DATE;
+    DECLARE v_hora TIME;
+    DECLARE v_dia  TINYINT;
+
+    SET p_momento = COALESCE(p_momento, NOW());
+    SET v_data = DATE(p_momento);
+    SET v_hora = TIME(p_momento);
+    SET v_dia  = DAYOFWEEK(v_data) - 1;   -- 0 = domingo, igual ao setor_horario
+
+    -- R1
+    IF NOT EXISTS (SELECT 1 FROM setor WHERE seto_id = p_setor_id AND seto_ativo = 1) THEN
+        RETURN 'Setor não encontrado';
+    END IF;
+
+    -- R2
+    IF EXISTS (SELECT 1 FROM setor_excecao
+                WHERE exce_data = v_data AND exce_fechado = 1
+                  AND (seto_id = p_setor_id OR seto_id IS NULL)) THEN
+        RETURN 'Fechado (feriado/recesso)';
+    END IF;
+
+    -- R3
+    IF EXISTS (SELECT 1 FROM setor_excecao
+                WHERE exce_data = v_data AND exce_fechado = 0
+                  AND exce_abre IS NOT NULL AND exce_fecha IS NOT NULL
+                  AND (seto_id = p_setor_id OR seto_id IS NULL)) THEN
+        IF EXISTS (SELECT 1 FROM setor_excecao
+                    WHERE exce_data = v_data AND exce_fechado = 0
+                      AND (seto_id = p_setor_id OR seto_id IS NULL)
+                      AND v_hora >= exce_abre AND v_hora < exce_fecha) THEN
+            RETURN 'Aberto (horário especial)';
+        END IF;
+        RETURN 'Fechado (horário especial)';
+    END IF;
+
+    -- R5
+    IF NOT EXISTS (SELECT 1 FROM setor_horario WHERE seto_id = p_setor_id) THEN
+        RETURN 'Horário não informado';
+    END IF;
+
+    -- R4
+    IF EXISTS (SELECT 1 FROM setor_horario
+                WHERE seto_id = p_setor_id
+                  AND hora_dia_semana = v_dia
+                  AND v_hora >= hora_abre AND v_hora < hora_fecha) THEN
+        RETURN 'Aberto';
+    END IF;
+
+    RETURN 'Fechado';
+END$$
+
+DELIMITER ;
+
+
+-- =============================================================
 -- TESTES RÁPIDOS (para mostrar na apresentação)
 -- Tire o "-- " da frente para rodar.
 -- =============================================================
@@ -860,3 +956,8 @@ DELIMITER ;
 -- INSERT INTO setor_horario (seto_id, hora_dia_semana, hora_abre, hora_fecha) VALUES ('cra', 1, '11:00', '14:00');
 -- TRIGGER: deve dar erro — fecha antes de abrir
 -- INSERT INTO setor_horario (seto_id, hora_dia_semana, hora_abre, hora_fecha) VALUES ('cra', 3, '18:00', '08:00');
+
+-- FUNCTION: o CRA agora, e numa segunda às 10h e às 12h (12:00 em ponto já é fechado)
+-- SELECT fn_situacao_setor('cra', NULL), fn_situacao_setor('cra', '2026-11-16 10:00'), fn_situacao_setor('cra', '2026-11-16 12:00');
+-- FUNCTION: todos os setores numa segunda às 15h
+-- SELECT seto_nome, fn_situacao_setor(seto_id, '2026-11-16 15:00') AS situacao FROM setor WHERE seto_ativo = 1 ORDER BY seto_nome;

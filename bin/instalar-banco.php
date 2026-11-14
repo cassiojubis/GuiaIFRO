@@ -95,7 +95,7 @@ try {
 $pdo->exec("USE `{$nomeBanco}`");
 $pdo->exec("SET time_zone = '" . (new DateTime())->format('P') . "'");
 
-echo "Criando as tabelas, a view, a procedure e os triggers...\n";
+echo "Criando as tabelas, a view, a procedure, os triggers e a function...\n";
 foreach (comandosSql(file_get_contents(__DIR__ . '/../sql/guiaifro.sql')) as $comando) {
     $pdo->exec($comando);
 }
