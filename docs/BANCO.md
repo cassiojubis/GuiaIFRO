@@ -83,10 +83,10 @@ contato_mensagem  cont_nome, cont_email, cont_telefone, cont_assunto, cont_mensa
   no banco do Guia. Nunca usar root no site.
 - Toda alteração feita pelo admin vai para `auditoria` (antes/depois em JSON).
 
-## View, procedure e triggers (regras de negócio no banco)
+## View, procedure, triggers e function (regras de negócio no banco)
 
-Ficam no fim do `sql/guiaifro.sql` (autor: Cayo Rodrigues do Santos) e são criados pelo
-`bin/instalar-banco.php`, que entende o `DELIMITER $$` usado na procedure e nos triggers.
+Ficam no fim do `sql/guiaifro.sql` (view, procedure e triggers: Cayo Rodrigues do Santos) e são criados pelo
+`bin/instalar-banco.php`, que entende o `DELIMITER $$` usado na procedure, nos triggers e na function.
 
 - `vw_situacao_setores_hoje` — cada setor ativo com onde fica, horário de hoje e situação
   ("Aberto agora", "Fechado hoje", "Horário não informado"...), já contando feriados e horários especiais.
@@ -94,3 +94,5 @@ Ficam no fim do `sql/guiaifro.sql` (autor: Cayo Rodrigues do Santos) e são cria
   recesso ou horário especial validando permissão, data e duplicidade, e grava na `auditoria` (tudo ou nada).
 - `trg_horario_valida_inserir` / `trg_horario_valida_alterar` — o banco recusa horário com dia inválido,
   com hora de fechar antes da de abrir ou que se sobrepõe a outra faixa do mesmo setor no mesmo dia.
+- `fn_situacao_setor(setor, momento)` — diz se o setor está aberto em qualquer dia e hora
+  (`NULL` = agora), com as mesmas regras da view. Ex.: `SELECT fn_situacao_setor('cra', '2026-11-16 15:00');`
